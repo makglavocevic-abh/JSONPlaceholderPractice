@@ -7,7 +7,7 @@ import java.io.File;
 
 public class PlaceholderUsers {
 
-    public static Response postNewUsers(final String usersEndpoint){
+    public static Response postNewUser(final String usersEndpoint){
 
         File jsonBody = new File("src/test/java/starter/objects/validpostbody.json");
 
@@ -23,7 +23,7 @@ public class PlaceholderUsers {
 
     }
 
-    public static Response getNewUsers(final String usersEndpoint){
+    public static Response getUsers(final String usersEndpoint){
 
         return RestAssured.given()
                     .header("Content-Type", "application/json")

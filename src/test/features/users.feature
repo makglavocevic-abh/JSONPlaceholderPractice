@@ -18,18 +18,18 @@ Feature: API tests for /users endpoint
 
   @user_regression @regression
   Scenario: Users GET albums nested route
-    When we GET users/albums
+    When we GET users albums
     Then we Assert that all albums are returned
 
   @user_regression @regression
   Scenario: Users GET posts nested route
-    When we GET users/posts
+    When we GET users posts
     Then we Assert that all posts are returned
 
   @user_regression @regression
   Scenario: Users GET todos nested route
-    When we GET users/todos
-    Then we Assert that all users are returned
+    When we GET users todos
+    Then we Assert that all todos are returned
 
   @user_regression @regression
   Scenario: Users POST invalid body endpoint
