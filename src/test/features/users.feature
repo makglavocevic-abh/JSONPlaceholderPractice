@@ -32,10 +32,6 @@ Feature: API tests for /users endpoint
     When we GET users todos
     Then we Assert that all todos are returned
 
-  @user_regression @regression
-  Scenario: Users POST invalid body endpoint
-    When we POST with invalid body
-    Then we Assert that the POST was unsuccessful
 
 
 

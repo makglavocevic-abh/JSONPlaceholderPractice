@@ -16,12 +16,17 @@ public class UsersStepDefinitions {
 
     private Response responseGETUsers;
     private Response responseGETUsersAlbums;
+    private Response responseGETUsersPosts;
+    private Response responseGETUsersTodos;
     private Response responsePOSTUser;
 
     private final String NEW_USERS_ENDPOINT = "https://jsonplaceholder.typicode.com/users/11";
     private final String NEW_USER_BODY = "src/test/java/starter/objects/validpostbody.json";
     private final String USERS_ENDPOINT = "https://jsonplaceholder.typicode.com/users";
     private final String USERS_ONE_ALBUMS_ENDPOINT = "https://jsonplaceholder.typicode.com/users/1/albums";
+    private final String USERS_ONE_POSTS_ENDPOINT = "https://jsonplaceholder.typicode.com/users/1/posts";
+    private final String USERS_ONE_TODOS_ENDPOINT = "https://jsonplaceholder.typicode.com/users/1/todos";
+
     PlaceholderEndpoints jsonPlaceHolderUsers = new PlaceholderEndpoints();
     EndpointStatus jsonPlaceHolderStatus = new EndpointStatus();
 
@@ -58,7 +63,8 @@ public class UsersStepDefinitions {
 
     @Then("we Assert that all users are returned")
     public void weAssertThatAllUsersAreReturned() {
-        responseGETUsers.then().assertThat().contentType(ContentType.JSON).and().body("size()", equalTo(10));
+        responseGETUsers.then().assertThat().contentType(ContentType.JSON)
+                .and().body("size()", equalTo(10));
     }
 
     @When("we GET users albums")
@@ -68,7 +74,32 @@ public class UsersStepDefinitions {
 
     @Then("we Assert that all albums are returned")
     public void weAssertThatAllAlbumsAreReturned() {
-        responseGETUsersAlbums.then().assertThat().contentType(ContentType.JSON).and().body("userId", hasItem(is(1)));
+        responseGETUsersAlbums.then().assertThat().contentType(ContentType.JSON)
+                .and().body("size()", equalTo(10))
+                .and().body("userId", hasItem(is(1)));
     }
 
+    @When("we GET users posts")
+    public void weGETUsersPosts() {
+        responseGETUsersPosts = PlaceholderEndpoints.getRequest(USERS_ONE_POSTS_ENDPOINT);
+    }
+
+    @Then("we Assert that all posts are returned")
+    public void weAssertThatAllPostsAreReturned() {
+        responseGETUsersPosts.then().assertThat().contentType(ContentType.JSON)
+                .and().body("size()", equalTo(10))
+                .and().body("userId", hasItem(is(1)));
+    }
+
+    @When("we GET users todos")
+    public void weGETUsersTodos() {
+        responseGETUsersTodos = PlaceholderEndpoints.getRequest(USERS_ONE_TODOS_ENDPOINT);
+    }
+
+    @Then("we Assert that all todos are returned")
+    public void weAssertThatAllTodosAreReturned() {
+        responseGETUsersTodos.then().assertThat().contentType(ContentType.JSON)
+                .and().body("size()", equalTo(20))
+                .and().body("userId", hasItem(is(1)));
+    }
 }
