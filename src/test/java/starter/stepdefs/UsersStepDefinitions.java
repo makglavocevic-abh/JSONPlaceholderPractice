@@ -8,20 +8,21 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.Assert;
 import starter.objects.EndpointStatus;
-import starter.objects.PlaceholderUsers;
+import starter.objects.PlaceholderEndpoints;
 
 import static org.hamcrest.Matchers.*;
-
 
 public class UsersStepDefinitions {
 
     private Response responseGETUsers;
     private Response responseGETUsersAlbums;
+    private Response responsePOSTUser;
 
     private final String NEW_USERS_ENDPOINT = "https://jsonplaceholder.typicode.com/users/11";
+    private final String NEW_USER_BODY = "src/test/java/starter/objects/validpostbody.json";
     private final String USERS_ENDPOINT = "https://jsonplaceholder.typicode.com/users";
     private final String USERS_ONE_ALBUMS_ENDPOINT = "https://jsonplaceholder.typicode.com/users/1/albums";
-    PlaceholderUsers jsonPlaceHolderUsers = new PlaceholderUsers();
+    PlaceholderEndpoints jsonPlaceHolderUsers = new PlaceholderEndpoints();
     EndpointStatus jsonPlaceHolderStatus = new EndpointStatus();
 
     @Given("The rest endpoint is online")
@@ -31,23 +32,28 @@ public class UsersStepDefinitions {
 
     @When("we POST valid user information")
     public void wePOSTValidUserInformation() {
-        PlaceholderUsers.postNewUser(USERS_ENDPOINT);
+        responsePOSTUser = PlaceholderEndpoints.postRequest(USERS_ENDPOINT, NEW_USER_BODY);
+    }
+
+
+    @And("we Assert that new user id is posted")
+    public void weAssertThatNewUserIdIsPosted() {
+        responsePOSTUser.then().assertThat().body("id", equalTo(11));
     }
 
     @And("we GET user information")
     public void weGETUserInformation() {
-        PlaceholderUsers.getUsers(USERS_ENDPOINT);
-
+        PlaceholderEndpoints.getRequest(USERS_ENDPOINT);
     }
 
     @Then("we DELETE the user information")
     public void weDELETETheUserInformation() {
-        jsonPlaceHolderUsers.deleteNewUsers(NEW_USERS_ENDPOINT);
+        jsonPlaceHolderUsers.deleteRequest(NEW_USERS_ENDPOINT);
     }
 
     @When("we GET users")
     public void weGETUsers() {
-        responseGETUsers = PlaceholderUsers.getUsers(USERS_ENDPOINT);
+        responseGETUsers = PlaceholderEndpoints.getRequest(USERS_ENDPOINT);
     }
 
     @Then("we Assert that all users are returned")
@@ -57,11 +63,12 @@ public class UsersStepDefinitions {
 
     @When("we GET users albums")
     public void weGETUsersAlbums() {
-        responseGETUsersAlbums = PlaceholderUsers.getUsers(USERS_ONE_ALBUMS_ENDPOINT);
+        responseGETUsersAlbums = PlaceholderEndpoints.getRequest(USERS_ONE_ALBUMS_ENDPOINT);
     }
 
     @Then("we Assert that all albums are returned")
     public void weAssertThatAllAlbumsAreReturned() {
         responseGETUsersAlbums.then().assertThat().contentType(ContentType.JSON).and().body("userId", hasItem(is(1)));
     }
+
 }

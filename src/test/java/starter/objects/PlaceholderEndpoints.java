@@ -5,25 +5,25 @@ import io.restassured.response.Response;
 
 import java.io.File;
 
-public class PlaceholderUsers {
+public class PlaceholderEndpoints {
 
-    public static Response postNewUser(final String usersEndpoint){
+    public static Response postRequest(final String usersEndpoint, final String body){
 
-        File jsonBody = new File("src/test/java/starter/objects/validpostbody.json");
+        File jsonBody = new File(body);
 
         return RestAssured.given()
-                   .header("Content-Type", "application/json")
-                   .body(jsonBody)
-                   .when()
-                   .post(usersEndpoint)
-                   .then()
-                   .statusCode(201)
-                   .extract()
-                   .response();
+                    .header("Content-Type", "application/json")
+                    .body(jsonBody)
+                    .when()
+                    .post(usersEndpoint)
+                    .then()
+                    .statusCode(201)
+                    .extract()
+                    .response();
 
     }
 
-    public static Response getUsers(final String usersEndpoint){
+    public static Response getRequest(final String usersEndpoint){
 
         return RestAssured.given()
                     .header("Content-Type", "application/json")
@@ -31,16 +31,19 @@ public class PlaceholderUsers {
                     .get(usersEndpoint)
                     .then()
                     .statusCode(200)
-                    .extract().response();
+                    .extract()
+                    .response();
 
     }
 
-    public void deleteNewUsers(final String deleteUsersUrl){
+    public void deleteRequest(final String deleteUsersUrl){
 
         RestAssured.given()
                 .delete(deleteUsersUrl)
                 .then()
-                .statusCode(200);
+                .statusCode(200)
+                .extract()
+                .response();
 
     }
 

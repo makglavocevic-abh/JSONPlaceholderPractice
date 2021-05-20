@@ -8,6 +8,7 @@ Feature: API tests for /users endpoint
   @smoke
   Scenario: Users endpoint smoke test
     When we POST valid user information
+    And we Assert that new user id is posted
     And we GET user information
     Then we DELETE the user information
 
