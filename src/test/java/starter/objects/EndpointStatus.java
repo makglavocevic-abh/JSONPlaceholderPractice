@@ -14,4 +14,5 @@ public class EndpointStatus {
         return statusresponse;
 
     }
+    
 }

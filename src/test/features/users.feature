@@ -7,7 +7,7 @@ Feature: API tests for /users endpoint
 
   @smoke
   Scenario: Users endpoint smoke test
-    When we POST valid user information
+    When we POST valid user body
     And we Assert that new user id is posted
     And we GET user information
     Then we DELETE the user information
@@ -31,9 +31,3 @@ Feature: API tests for /users endpoint
   Scenario: Users GET todos nested route
     When we GET users todos
     Then we Assert that all todos are returned
-
-
-
-
-
-

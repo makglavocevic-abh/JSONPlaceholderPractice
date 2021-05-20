@@ -8,97 +8,86 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.Assert;
 import starter.objects.EndpointStatus;
+import starter.objects.EndpointsConst;
 import starter.objects.PlaceholderEndpoints;
 
 import static org.hamcrest.Matchers.*;
 
 public class UsersStepDefinitions {
 
-    private Response responseGETUsers;
-    private Response responseGETUsersAlbums;
-    private Response responseGETUsersPosts;
-    private Response responseGETUsersTodos;
-    private Response responsePOSTUser;
-
-    private final String NEW_USERS_ENDPOINT = "https://jsonplaceholder.typicode.com/users/11";
-    private final String NEW_USER_BODY = "src/test/java/starter/objects/validpostbody.json";
-    private final String USERS_ENDPOINT = "https://jsonplaceholder.typicode.com/users";
-    private final String USERS_ONE_ALBUMS_ENDPOINT = "https://jsonplaceholder.typicode.com/users/1/albums";
-    private final String USERS_ONE_POSTS_ENDPOINT = "https://jsonplaceholder.typicode.com/users/1/posts";
-    private final String USERS_ONE_TODOS_ENDPOINT = "https://jsonplaceholder.typicode.com/users/1/todos";
+    private Response response;
 
     PlaceholderEndpoints jsonPlaceHolderUsers = new PlaceholderEndpoints();
     EndpointStatus jsonPlaceHolderStatus = new EndpointStatus();
 
     @Given("The rest endpoint is online")
     public void theRestEndpointIsOnline() {
-        Assert.assertEquals(200, jsonPlaceHolderStatus.getStatusCode(USERS_ENDPOINT));
+        Assert.assertEquals(200, jsonPlaceHolderStatus.getStatusCode(EndpointsConst.USERS_ENDPOINT));
     }
 
-    @When("we POST valid user information")
+    @When("we POST valid user body")
     public void wePOSTValidUserInformation() {
-        responsePOSTUser = PlaceholderEndpoints.postRequest(USERS_ENDPOINT, NEW_USER_BODY);
+        response = PlaceholderEndpoints.postRequest(EndpointsConst.USERS_ENDPOINT, EndpointsConst.NEW_USER_BODY);
     }
-
 
     @And("we Assert that new user id is posted")
     public void weAssertThatNewUserIdIsPosted() {
-        responsePOSTUser.then().assertThat().body("id", equalTo(11));
+        response.then().assertThat().body("id", equalTo(11));
     }
 
     @And("we GET user information")
     public void weGETUserInformation() {
-        PlaceholderEndpoints.getRequest(USERS_ENDPOINT);
+        PlaceholderEndpoints.getRequest(EndpointsConst.USERS_ENDPOINT);
     }
 
     @Then("we DELETE the user information")
     public void weDELETETheUserInformation() {
-        jsonPlaceHolderUsers.deleteRequest(NEW_USERS_ENDPOINT);
+        jsonPlaceHolderUsers.deleteRequest(EndpointsConst.NEW_USERS_ENDPOINT);
     }
 
     @When("we GET users")
     public void weGETUsers() {
-        responseGETUsers = PlaceholderEndpoints.getRequest(USERS_ENDPOINT);
+        response = PlaceholderEndpoints.getRequest(EndpointsConst.USERS_ENDPOINT);
     }
 
     @Then("we Assert that all users are returned")
     public void weAssertThatAllUsersAreReturned() {
-        responseGETUsers.then().assertThat().contentType(ContentType.JSON)
+        response.then().assertThat().contentType(ContentType.JSON)
                 .and().body("size()", equalTo(10));
     }
 
     @When("we GET users albums")
     public void weGETUsersAlbums() {
-        responseGETUsersAlbums = PlaceholderEndpoints.getRequest(USERS_ONE_ALBUMS_ENDPOINT);
+        response = PlaceholderEndpoints.getRequest(EndpointsConst.USERS_ONE_ALBUMS_ENDPOINT);
     }
 
     @Then("we Assert that all albums are returned")
     public void weAssertThatAllAlbumsAreReturned() {
-        responseGETUsersAlbums.then().assertThat().contentType(ContentType.JSON)
+        response.then().assertThat().contentType(ContentType.JSON)
                 .and().body("size()", equalTo(10))
                 .and().body("userId", hasItem(is(1)));
     }
 
     @When("we GET users posts")
     public void weGETUsersPosts() {
-        responseGETUsersPosts = PlaceholderEndpoints.getRequest(USERS_ONE_POSTS_ENDPOINT);
+        response = PlaceholderEndpoints.getRequest(EndpointsConst.USERS_ONE_POSTS_ENDPOINT);
     }
 
     @Then("we Assert that all posts are returned")
     public void weAssertThatAllPostsAreReturned() {
-        responseGETUsersPosts.then().assertThat().contentType(ContentType.JSON)
+        response.then().assertThat().contentType(ContentType.JSON)
                 .and().body("size()", equalTo(10))
                 .and().body("userId", hasItem(is(1)));
     }
 
     @When("we GET users todos")
     public void weGETUsersTodos() {
-        responseGETUsersTodos = PlaceholderEndpoints.getRequest(USERS_ONE_TODOS_ENDPOINT);
+        response = PlaceholderEndpoints.getRequest(EndpointsConst.USERS_ONE_TODOS_ENDPOINT);
     }
 
     @Then("we Assert that all todos are returned")
     public void weAssertThatAllTodosAreReturned() {
-        responseGETUsersTodos.then().assertThat().contentType(ContentType.JSON)
+        response.then().assertThat().contentType(ContentType.JSON)
                 .and().body("size()", equalTo(20))
                 .and().body("userId", hasItem(is(1)));
     }
