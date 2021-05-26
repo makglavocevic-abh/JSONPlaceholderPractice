@@ -1,41 +1,48 @@
 Feature: API tests for /posts endpoint
 
-  Description: Purpose of these tests is to cover the /posts endpoint happy paths and its nested routes
+  Description: Posts feature is an endpoint that allows us to create, edit and delete posts.
+  There are also comments nested route that allow users to view add and delete comments on their posts.
 
   Background: User checks if the endpoint is online
-    Given The rest endpoint is online
+    Given The posts rest endpoint is online
 
   @posts_regression @regression
-  Scenario: Posts GET endpoint
-    When we GET Posts
-    Then we Assert that all Posts are returned
+  Scenario: Verify that the user can access posts information
+    When User sends GET request to posts endpoint
+    Then Assert that all Posts are returned
 
   @posts_regression @regression
-  Scenario: Posts POST endpoint
-    When we POST valid Post body
-    Then we Assert that new post id is posted
+  Scenario: Verify that the user can post new posts with valid information
+    When User posts valid posts body
+    Then Assert that new post id is posted
 
   @posts_regression @regression
-  Scenario: Posts PUT endpoint
-    When we PUT Posts with new changes
-    Then we Assert that the update was successful
+  Scenario: Verify that the user can edit information on their posts
+    When User send PUT request with valid body
+    Then Assert that the posts update was successful
 
   @posts_regression @regression
-  Scenario: Posts DELETE endpoint
-    When we DELETE Posts
-    Then we Assert that the post is deleted
+  Scenario: Verify that the user can delete their posts
+    When User sends DELETE request to posts endpoint
+    Then Assert that the post is deleted
 
   @posts_regression @regression
-  Scenario: Posts GET comments endpoint
-    When we GET comments nested route
-    Then we Assert that all comments are returned
+  Scenario Outline: Verify that the user can access their post comments
+    When User sends GET request to <posts> comments
+    Then Assert that all comments are returned
+
+  Examples:
+    |posts|
+    |1    |
+    |2    |
+    |3    |
 
   @posts_regression @regression
-  Scenario: Posts POST comment endpoint
-    When we POST comments nested route
-    Then we Assert that the new comment was posted
+  Scenario: Verify that users can post comments using valid information
+    When User posts valid comment body to a post
+    Then Assert that the new comment was posted
 
   @posts_regression @regression
-  Scenario: Posts DELETE comment endpoint
-    When we DELETE comments nested route
-    Then we Assert that the comments was deleted
+  Scenario: Verify that the user can delete comments from their posts
+    When User sends DELETE request to comments endpoint
+    Then Assert that the comment was deleted

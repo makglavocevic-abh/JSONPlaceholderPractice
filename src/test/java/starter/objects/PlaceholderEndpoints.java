@@ -7,7 +7,7 @@ import java.io.File;
 
 public class PlaceholderEndpoints {
 
-    public static Response postRequest(final String usersEndpoint, final String body){
+    public static Response postRequest(final String Endpoint, final String body){
 
         File jsonBody = new File(body);
 
@@ -15,35 +15,56 @@ public class PlaceholderEndpoints {
                     .header("Content-Type", "application/json")
                     .body(jsonBody)
                     .when()
-                    .post(usersEndpoint)
-                    .then()
-                    .statusCode(201)
-                    .extract()
-                    .response();
+                    .post(Endpoint);
 
     }
 
-    public static Response getRequest(final String usersEndpoint){
+    public static Response postSpecificRequest(final String Endpoint, final String body, int Id){
+
+        File jsonBody = new File(body);
 
         return RestAssured.given()
-                    .header("Content-Type", "application/json")
-                    .when()
-                    .get(usersEndpoint)
-                    .then()
-                    .statusCode(200)
-                    .extract()
-                    .response();
+                .header("Content-Type", "application/json")
+                .pathParam("Id", Id)
+                .body(jsonBody)
+                .when()
+                .post(Endpoint);
 
     }
 
-    public void deleteRequest(final String deleteUsersUrl){
+    public static Response putSpecificRequest(final String Endpoint, final String body, int Id){
 
-        RestAssured.given()
-                .delete(deleteUsersUrl)
-                .then()
-                .statusCode(200)
-                .extract()
-                .response();
+        return RestAssured.given()
+                .pathParam("Id", Id)
+                .header("Content-Type", "application/json")
+                .body(body)
+                .when()
+                .put(Endpoint);
+
+    }
+
+    public static Response getRequest(final String Endpoint){
+
+        return RestAssured.given()
+                    .when()
+                    .get(Endpoint);
+
+    }
+
+    public static Response getSpecificRequest(final String Endpoint, int Id){
+
+        return RestAssured.given()
+                .pathParam("Id", Id)
+                .when()
+                .get(Endpoint);
+
+    }
+
+    public static Response deleteRequest(final String Endpoint, int Id){
+
+        return RestAssured.given()
+                .pathParam("Id", Id)
+                .delete(Endpoint);
 
     }
 
