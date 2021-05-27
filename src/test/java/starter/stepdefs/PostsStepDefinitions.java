@@ -4,6 +4,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
+import net.thucydides.core.annotations.Steps;
 import org.hamcrest.Matchers;
 import starter.objects.VerifyEndpoint;
 import starter.objects.EndpointPath;
@@ -16,17 +17,21 @@ public class PostsStepDefinitions {
 
     private Response response;
 
-    VerifyEndpoint JSONPlaceholderCheck = new VerifyEndpoint();
+    @Steps
+    PlaceholderEndpoints placeholderEndpoints;
 
-    @Given("The posts rest endpoint is online")
+    @Steps
+    VerifyEndpoint JSONPlaceholderCheck;
+
+        @Given("The posts rest endpoint is online")
     public void theRestPostsEndpointIsOnline() {
-        response = PlaceholderEndpoints.getRequest(EndpointPath.POSTS_ENDPOINT);
+        response = placeholderEndpoints.getRequest(EndpointPath.POSTS_ENDPOINT);
         JSONPlaceholderCheck.validateHttpStatusCode(200, response);
     }
 
     @When("User sends GET request to posts endpoint")
     public void GETPosts() {
-        response = PlaceholderEndpoints.getRequest(EndpointPath.POSTS_ENDPOINT);
+        response = placeholderEndpoints.getRequest(EndpointPath.POSTS_ENDPOINT);
     }
 
     @Then("Assert that all Posts are returned")
@@ -36,7 +41,7 @@ public class PostsStepDefinitions {
 
     @When("User posts valid posts body")
     public void POSTValidPostBody() {
-        response = PlaceholderEndpoints.postRequest(EndpointPath.POSTS_ENDPOINT, EndpointPath.NEW_POSTS_BODY);
+        response = placeholderEndpoints.postRequest(EndpointPath.POSTS_ENDPOINT, EndpointPath.NEW_POSTS_BODY);
     }
 
     @Then("Assert that new post id is posted")
@@ -46,7 +51,7 @@ public class PostsStepDefinitions {
 
     @When("User send PUT request with valid body")
     public void PUTPostsWithNewChanges() {
-        response = PlaceholderEndpoints.putSpecificRequest(EndpointPath.POST_ENDPOINT, JsonBodyRandomData.TITLE_PUT_BODY(), 1);
+        response = placeholderEndpoints.putSpecificRequest(EndpointPath.POST_ENDPOINT, JsonBodyRandomData.TITLE_PUT_BODY(), 1);
     }
 
     @Then("Assert that the posts update was successful")
@@ -56,7 +61,7 @@ public class PostsStepDefinitions {
 
     @When("User sends DELETE request to posts endpoint")
     public void DELETEPosts() {
-        response = PlaceholderEndpoints.deleteRequest(EndpointPath.NEW_POST_ENDPOINT, 101);
+        response = placeholderEndpoints.deleteRequest(EndpointPath.NEW_POST_ENDPOINT, 101);
     }
 
     @Then("Assert that the post is deleted")
@@ -66,7 +71,7 @@ public class PostsStepDefinitions {
 
     @When("User sends GET request to (\\d+) comments$")
     public void GETCommentsNestedRoute(int posts) {
-        response = PlaceholderEndpoints.getSpecificRequest(EndpointPath.POSTS_COMMENTS_ENDPOINT, posts);
+        response = placeholderEndpoints.getSpecificRequest(EndpointPath.POSTS_COMMENTS_ENDPOINT, posts);
     }
 
     @Then("Assert that all comments are returned")
@@ -76,7 +81,7 @@ public class PostsStepDefinitions {
 
     @When("User posts valid comment body to a post")
     public void POSTCommentsNestedRoute() {
-        response = PlaceholderEndpoints.postSpecificRequest(EndpointPath.POSTS_COMMENTS_ENDPOINT, EndpointPath.NEW_COMMENTS_BODY, 1);
+        response = placeholderEndpoints.postSpecificRequest(EndpointPath.POSTS_COMMENTS_ENDPOINT, EndpointPath.NEW_COMMENTS_BODY, 1);
     }
 
     @Then("Assert that the new comment was posted")
@@ -86,7 +91,7 @@ public class PostsStepDefinitions {
 
     @When("User sends DELETE request to comments endpoint")
     public void DELETECommentsNestedRoute() {
-        response = PlaceholderEndpoints.deleteRequest(EndpointPath.NEW_COMMENT_ENDPOINT, 501);
+        response = placeholderEndpoints.deleteRequest(EndpointPath.NEW_COMMENT_ENDPOINT, 501);
     }
 
     @Then("Assert that the comment was deleted")

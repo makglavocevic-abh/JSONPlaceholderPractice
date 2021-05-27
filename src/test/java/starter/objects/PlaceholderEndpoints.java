@@ -2,24 +2,28 @@ package starter.objects;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import net.thucydides.core.annotations.Step;
+
+import static net.serenitybdd.rest.SerenityRest.rest;
 
 import java.io.File;
 
 public class PlaceholderEndpoints {
 
-    public static Response postRequest(final String Endpoint, final String body){
+    @Step("POST Request")
+    public Response postRequest(final String Endpoint, final String body){
 
         File jsonBody = new File(body);
 
-        return RestAssured.given()
-                    .header("Content-Type", "application/json")
-                    .body(jsonBody)
-                    .when()
-                    .post(Endpoint);
+        return rest()
+                .header("Content-Type", "application/json")
+                .body(jsonBody)
+                .when()
+                .post(Endpoint);
 
     }
-
-    public static Response postSpecificRequest(final String Endpoint, final String body, int Id){
+    @Step("POST Specific request")
+    public Response postSpecificRequest(final String Endpoint, final String body, int Id){
 
         File jsonBody = new File(body);
 
@@ -31,8 +35,8 @@ public class PlaceholderEndpoints {
                 .post(Endpoint);
 
     }
-
-    public static Response putSpecificRequest(final String Endpoint, final String body, int Id){
+    @Step("PUT Specific request")
+    public Response putSpecificRequest(final String Endpoint, final String body, int Id){
 
         return RestAssured.given()
                 .pathParam("Id", Id)
@@ -42,16 +46,17 @@ public class PlaceholderEndpoints {
                 .put(Endpoint);
 
     }
-
-    public static Response getRequest(final String Endpoint){
+    @Step("GET Request")
+    public Response getRequest(final String Endpoint){
 
         return RestAssured.given()
-                    .when()
-                    .get(Endpoint);
+                .when()
+                .get(Endpoint);
 
     }
 
-    public static Response getSpecificRequest(final String Endpoint, int Id){
+    @Step("GET Specific request")
+    public Response getSpecificRequest(final String Endpoint, int Id){
 
         return RestAssured.given()
                 .pathParam("Id", Id)
@@ -59,8 +64,8 @@ public class PlaceholderEndpoints {
                 .get(Endpoint);
 
     }
-
-    public static Response deleteRequest(final String Endpoint, int Id){
+    @Step("DELETE Request")
+    public Response deleteRequest(final String Endpoint, int Id){
 
         return RestAssured.given()
                 .pathParam("Id", Id)
