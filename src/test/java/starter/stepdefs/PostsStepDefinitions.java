@@ -7,9 +7,9 @@ import io.restassured.response.Response;
 import net.thucydides.core.annotations.Steps;
 import org.hamcrest.Matchers;
 import starter.objects.VerifyEndpoint;
-import starter.objects.EndpointPath;
 import starter.objects.JsonBodyRandomData;
 import starter.objects.PlaceholderEndpoints;
+import static starter.objects.EndpointPath.*;
 
 import static org.hamcrest.Matchers.equalTo;
 
@@ -23,79 +23,79 @@ public class PostsStepDefinitions {
     @Steps
     VerifyEndpoint JSONPlaceholderCheck;
 
-        @Given("The posts rest endpoint is online")
+        @Given("the posts rest endpoint is online")
     public void theRestPostsEndpointIsOnline() {
-        response = placeholderEndpoints.getRequest(EndpointPath.POSTS_ENDPOINT);
+        response = placeholderEndpoints.getRequest(postsEndpoint);
         JSONPlaceholderCheck.validateHttpStatusCode(200, response);
     }
 
-    @When("User sends GET request to posts endpoint")
-    public void GETPosts() {
-        response = placeholderEndpoints.getRequest(EndpointPath.POSTS_ENDPOINT);
+    @When("user sends GET request to posts endpoint")
+    public void userGetPosts() {
+        response = placeholderEndpoints.getRequest(postsEndpoint);
     }
 
-    @Then("Assert that all Posts are returned")
-    public void AssertThatAllPostsAreReturned() {
+    @Then("all Posts are returned")
+    public void allPostsAreReturned() {
         JSONPlaceholderCheck.validateResponseSize(100, response);
     }
 
-    @When("User posts valid posts body")
-    public void POSTValidPostBody() {
-        response = placeholderEndpoints.postRequest(EndpointPath.POSTS_ENDPOINT, EndpointPath.NEW_POSTS_BODY);
+    @When("user creates new post")
+    public void userCreatesPost() {
+        response = placeholderEndpoints.postRequest(postsEndpoint, postsBody);
     }
 
-    @Then("Assert that new post id is posted")
-    public void AssertThatNewPostIdIsPosted() {
+    @Then("new post id is returned")
+    public void newPostIdIsReturned() {
         response.then().assertThat().body("id", equalTo(101));
     }
 
-    @When("User send PUT request with valid body")
-    public void PUTPostsWithNewChanges() {
-        response = placeholderEndpoints.putSpecificRequest(EndpointPath.POST_ENDPOINT, JsonBodyRandomData.TITLE_PUT_BODY(), 1);
+    @When("user updates a post")
+    public void userUpdatePost() {
+        response = placeholderEndpoints.putSpecificRequest(specificPost, JsonBodyRandomData.TITLE_PUT_BODY(), 1);
     }
 
-    @Then("Assert that the posts update was successful")
-    public void AssertThatTheUpdateWasSuccessful() {
+    @Then("the post update is successful")
+    public void thePostUpdateIsSuccessful() {
         response.then().assertThat().body("title", equalTo(JsonBodyRandomData.randomString));
     }
 
-    @When("User sends DELETE request to posts endpoint")
-    public void DELETEPosts() {
-        response = placeholderEndpoints.deleteRequest(EndpointPath.NEW_POST_ENDPOINT, 101);
+    @When("user deletes a post")
+    public void userDeletesPost() {
+        response = placeholderEndpoints.deleteRequest(specificPost, 101);
     }
 
-    @Then("Assert that the post is deleted")
-    public void AssertThatThePostIsDeleted() {
+    @Then("the post is deleted successfully")
+    public void thePostIsDeletedSuccessfully() {
         response.then().assertThat().body("isEmpty()", Matchers.is(true));
     }
 
-    @When("User sends GET request to (\\d+) comments$")
-    public void GETCommentsNestedRoute(int posts) {
-        response = placeholderEndpoints.getSpecificRequest(EndpointPath.POSTS_COMMENTS_ENDPOINT, posts);
+    @When("user sends GET request to (\\d+) posts comments endpoint$")
+    public void userGetComments(int posts) {
+        response = placeholderEndpoints.getSpecificRequest(commentPOST , posts);
     }
 
-    @Then("Assert that all comments are returned")
-    public void AssertThatAllCommentsAreReturned() {
+    @Then("all comments are returned")
+    public void allCommentsAreReturned() {
         JSONPlaceholderCheck.validateResponseSize(5, response);
     }
 
-    @When("User posts valid comment body to a post")
-    public void POSTCommentsNestedRoute() {
-        response = placeholderEndpoints.postSpecificRequest(EndpointPath.POSTS_COMMENTS_ENDPOINT, EndpointPath.NEW_COMMENTS_BODY, 1);
+    @When("user creates a new comment within a post")
+    public void userCreatesNewComment() {
+        response = placeholderEndpoints.postSpecificRequest(commentPOST , commentBody, 1);
     }
 
-    @Then("Assert that the new comment was posted")
-    public void AssertThatTheNewCommentWasPosted() {
+    @Then("new comment id is returned")
+    public void newCommentIdReturned() {
         response.then().assertThat().body("id", equalTo(501));
     }
 
-    @When("User sends DELETE request to comments endpoint")
-    public void DELETECommentsNestedRoute() {
-        response = placeholderEndpoints.deleteRequest(EndpointPath.NEW_COMMENT_ENDPOINT, 501);
+    @When("user deletes a comment")
+    public void userDeletesComment() {
+        response = placeholderEndpoints.deleteRequest(specificComment, 501);
     }
 
-    @Then("Assert that the comment was deleted")
-    public void AssertThatTheCommentWasDeleted() {
+    @Then("the comment is deleted successfully")
+    public void commentIsRemovedSuccessfully() {
         response.then().assertThat().body("isEmpty()", Matchers.is(true));
     }
 

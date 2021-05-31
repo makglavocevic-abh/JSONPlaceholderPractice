@@ -4,45 +4,45 @@ Feature: API tests for /posts endpoint
   There are also comments nested route that allow users to view add and delete comments on their posts.
 
   Background: User checks if the endpoint is online
-    Given The posts rest endpoint is online
+    Given the posts rest endpoint is online
 
   @posts_regression @regression
   Scenario: Verify that the user can access posts information
-    When User sends GET request to posts endpoint
-    Then Assert that all Posts are returned
+    When user sends GET request to posts endpoint
+    Then all Posts are returned
 
   @posts_regression @regression
   Scenario: Verify that the user can post new posts with valid information
-    When User posts valid posts body
-    Then Assert that new post id is posted
+    When user creates new post
+    Then new post id is returned
 
   @posts_regression @regression
   Scenario: Verify that the user can edit information on their posts
-    When User send PUT request with valid body
-    Then Assert that the posts update was successful
+    When user updates a post
+    Then the post update is successful
 
   @posts_regression @regression
   Scenario: Verify that the user can delete their posts
-    When User sends DELETE request to posts endpoint
-    Then Assert that the post is deleted
+    When user deletes a post
+    Then the post is deleted successfully
 
   @posts_regression @regression
   Scenario Outline: Verify that the user can access their post comments
-    When User sends GET request to <posts> comments
-    Then Assert that all comments are returned
+    When user sends GET request to <postsId> posts comments endpoint
+    Then all comments are returned
 
   Examples:
-    |posts|
-    |1    |
-    |2    |
-    |3    |
+    |postsId|
+    |1      |
+    |2      |
+    |3      |
 
   @posts_regression @regression
   Scenario: Verify that users can post comments using valid information
-    When User posts valid comment body to a post
-    Then Assert that the new comment was posted
+    When user creates a new comment within a post
+    Then new comment id is returned
 
   @posts_regression @regression
   Scenario: Verify that the user can delete comments from their posts
-    When User sends DELETE request to comments endpoint
-    Then Assert that the comment was deleted
+    When user deletes a comment
+    Then the comment is deleted successfully

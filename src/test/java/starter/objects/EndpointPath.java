@@ -2,43 +2,48 @@ package starter.objects;
 
 public interface EndpointPath {
 
-    String NEW_USERS_ENDPOINT = "https://jsonplaceholder.typicode.com/users/{Id}";
+    String specificUser = "/users/{Id}";
 
-    String NEW_POST_ENDPOINT = "https://jsonplaceholder.typicode.com/posts/{Id}";
+    String specificPost = "/posts/{Id}";
 
-    String NEW_COMMENT_ENDPOINT = "https://jsonplaceholder.typicode.com/comments/{Id}";
+    String specificComment = "/comments/{Id}";
 
-    String NEW_ALBUM_ENDPOINT = "https://jsonplaceholder.typicode.com/albums/{Id}";
+    String specificAlbum = "/albums/{Id}";
 
-    String NEW_PHOTOS_ENDPOINT = "https://jsonplaceholder.typicode.com/photos/{Id}";
+    String specificPhoto = "/photos/{Id}";
 
-    String POSTS_COMMENTS_ENDPOINT = "https://jsonplaceholder.typicode.com/posts/{Id}/comments";
+    String specificTodos = "/todos/{Id}";
 
-    String ALBUMS_PHOTOS_ENDPOINT = "https://jsonplaceholder.typicode.com/albums/{Id}/photos";
+    String commentPOST = "/posts/{Id}/comments";
 
-    String NEW_USER_BODY = "src/test/java/resources/validusersbody.json";
+    String photosPOST = "/albums/{Id}/photos";
 
-    String NEW_COMMENTS_BODY = "src/test/java/resources/validcommentsbody.json";
+    String userBody = "src/test/java/resources/validusersbody.json";
 
-    String NEW_POSTS_BODY = "src/test/java/resources/validpostsbody.json";
+    String commentBody = "src/test/java/resources/validcommentsbody.json";
 
-    String NEW_ALBUM_BODY = "src/test/java/resources/validalbumsbody.json";
+    String postsBody = "src/test/java/resources/validpostsbody.json";
 
-    String NEW_PHOTOS_BODY = "src/test/java/resources/validphotosbody.json";
+    String albumsBody = "src/test/java/resources/validalbumsbody.json";
 
-    String USERS_ENDPOINT = "https://jsonplaceholder.typicode.com/users";
+    String photosBody = "src/test/java/resources/validphotosbody.json";
 
-    String ALBUMS_ENDPOINT = "https://jsonplaceholder.typicode.com/albums";
+    String todosBody = "src/test/java/resources/validtodosbody.json";
 
-    String POSTS_ENDPOINT = "https://jsonplaceholder.typicode.com/posts";
+    String todosChangeStatusBody = "src/test/java/resources/todocompleted.json";
 
-    String USERS_ONE_ALBUMS_ENDPOINT = "https://jsonplaceholder.typicode.com/users/{Id}/albums";
+    String usersEndpoint = "/users";
 
-    String USERS_ONE_POSTS_ENDPOINT = "https://jsonplaceholder.typicode.com/users/{Id}/posts";
+    String todosEndpoint = "/todos";
 
-    String USERS_ONE_TODOS_ENDPOINT = "https://jsonplaceholder.typicode.com/users/{Id}/todos";
+    String albumsEndpoint = "/albums";
 
-    String POST_ENDPOINT = "https://jsonplaceholder.typicode.com/posts/{Id}";
+    String postsEndpoint = "/posts";
 
-    String ALBUM_ENDPOINT = "https://jsonplaceholder.typicode.com/albums/{Id}";
+    String userAlbums = "/users/{Id}/albums";
+
+    String userPosts = "/users/{Id}/posts";
+
+    String userTodos = "/users/{Id}/todos";
+
 }

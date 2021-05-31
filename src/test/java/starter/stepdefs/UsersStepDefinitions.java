@@ -7,8 +7,8 @@ import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 import net.thucydides.core.annotations.Steps;
 import starter.objects.VerifyEndpoint;
-import starter.objects.EndpointPath;
 import starter.objects.PlaceholderEndpoints;
+import static starter.objects.EndpointPath.*;
 
 import static org.hamcrest.Matchers.*;
 
@@ -22,69 +22,65 @@ public class UsersStepDefinitions {
     @Steps
     VerifyEndpoint JSONPlaceholderCheck;
 
-    @Given("The rest endpoint is online")
+    @Given("the rest endpoint is online")
     public void theRestEndpointIsOnline() {
-        response = placeholderEndpoints.getRequest(EndpointPath.USERS_ENDPOINT);
+        response = placeholderEndpoints.getRequest(usersEndpoint);
         JSONPlaceholderCheck.validateHttpStatusCode(200, response);
     }
 
-    @When("User posts valid user body")
-    public void POSTValidUserInformation() {
-        response = placeholderEndpoints.postRequest(EndpointPath.USERS_ENDPOINT, EndpointPath.NEW_USER_BODY);
+    @When("user creates a new user")
+    public void createNewUser() {
+        response = placeholderEndpoints.postRequest(usersEndpoint, userBody);
     }
 
-    @And("Assert that new user id is posted")
-    public void AssertThatNewUserIdIsPosted() {
+    @And("new user id is returned")
+    public void confirmThatTheUserIsCreated() {
         response.then().assertThat().body("id", equalTo(11));
     }
 
-    @And("GET user information")
-    public void GETUserInformation() {
-        placeholderEndpoints.getRequest(EndpointPath.USERS_ENDPOINT);
+    @Then("delete the new user")
+    public void deleteTheNewUser() {
+        placeholderEndpoints.deleteRequest(specificUser, 11);
     }
 
-    @Then("DELETE the user")
-    public void DELETETheUserInformation() {
-        placeholderEndpoints.deleteRequest(EndpointPath.NEW_USERS_ENDPOINT, 11);
+    @When("user sends GET request to users endpoint")
+    public void retrieveUserInformation() {
+        response = placeholderEndpoints.getRequest(usersEndpoint);
     }
 
-    @When("User sends GET request to users endpoint")
-    public void GETUsers() {
-        response = placeholderEndpoints.getRequest(EndpointPath.USERS_ENDPOINT);
-    }
-
-    @Then("Assert that all users are returned")
-    public void AssertThatAllUsersAreReturned() {
+    @Then("all users are returned")
+    public void thenAllUsersAreReturned() {
         JSONPlaceholderCheck.validateResponseSize(10, response);
     }
 
-    @When("User sends GET request to users albums endpoint")
-    public void GETUsersAlbums() {
-        response = placeholderEndpoints.getSpecificRequest(EndpointPath.USERS_ONE_ALBUMS_ENDPOINT, 1);
+    @When("user sends GET request to users albums endpoint")
+    public void userGetAlbums() {
+        response = placeholderEndpoints.getSpecificRequest(userAlbums, 1);
     }
 
-    @Then("Assert that all albums are returned")
-    public void AssertThatAllAlbumsAreReturned() {
+    @Then("all albums are returned")
+    public void allAlbumsAreReturned() {
         JSONPlaceholderCheck.validateResponseSizeAndUserId(10, 1, response);
     }
 
-    @When("User sends GET request to users posts endpoint")
-    public void GETUsersPosts() {
-        response = placeholderEndpoints.getSpecificRequest(EndpointPath.USERS_ONE_POSTS_ENDPOINT, 1);
+    @When("user sends GET request to users posts endpoint")
+    public void userGetPosts() {
+        response = placeholderEndpoints.getSpecificRequest(userPosts, 1);
     }
 
-    @Then("Assert that all posts are returned")
-    public void AssertThatAllPostsAreReturned() {
+    @Then("all posts are returned")
+    public void allPostsAreReturned() {
         JSONPlaceholderCheck.validateResponseSizeAndUserId(10, 1, response);
     }
 
-    @When("User sends GET request to users todos endpoint")
-    public void GETUsersTodos() {
-        response = placeholderEndpoints.getSpecificRequest(EndpointPath.USERS_ONE_TODOS_ENDPOINT, 1);
+    @When("user sends GET request to users todos endpoint")
+    public void userGetTodos() {
+        response = placeholderEndpoints.getSpecificRequest(userTodos, 1);
     }
 
-    @Then("Assert that all todos are returned")
-    public void AssertThatAllTodosAreReturned() {
+    @Then("all todos are returned")
+    public void allTodosAreReturned() {
         JSONPlaceholderCheck.validateResponseSizeAndUserId(20, 1, response);
     }
+
 }
