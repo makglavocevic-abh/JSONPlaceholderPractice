@@ -25,7 +25,7 @@ mvn clean verify
 ### Run with @tags
 
 ```python
-mvn clean verify -Dcucumber.options="--tags @user"
+mvn clean verify -Dcucumber.options="--tags @Tags"
 ```
 
 Tags |  | 
