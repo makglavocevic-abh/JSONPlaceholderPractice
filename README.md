@@ -4,13 +4,17 @@ This is the first task for my probation period at Atlantbh,
 JSONplaceholder API Automation testing using REST Assured, Cucumber and Serenity.
 
 ---
-###How to run tests
+
+### How to run tests
+
 Via terminal go to the test folder and type command
 ```python
 mvn clean verify
 ```
 ---
-###Dependencies used
+
+### Dependencies used
+
 - REST Assured
 - Cucumber
 - Serenity BDD
@@ -18,7 +22,8 @@ mvn clean verify
 - Hamcrest
 
 ---
-###Run with @tags
+### Run with @tags
+
 ```python
 mvn clean verify -Dcucumber.options="--tags @user"
 ```
