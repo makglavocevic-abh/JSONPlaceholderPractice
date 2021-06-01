@@ -9,7 +9,8 @@ import net.thucydides.core.annotations.Step;
 
 import java.io.File;
 
-import static io.restassured.RestAssured.given;
+import static net.serenitybdd.rest.SerenityRest.given;
+
 
 public class PlaceholderEndpoints {
 
