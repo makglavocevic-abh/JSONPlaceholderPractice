@@ -51,7 +51,7 @@ public class PostsStepDefinitions {
 
     @When("user updates a post")
     public void userUpdatePost() {
-        response = placeholderEndpoints.putSpecificRequest(specificPost, JsonBodyRandomData.TITLE_PUT_BODY(), 1);
+        response = placeholderEndpoints.putSpecificRequest(specificPost, JsonBodyRandomData.titlePutBody(), 1);
     }
 
     @Then("the post update is successful")

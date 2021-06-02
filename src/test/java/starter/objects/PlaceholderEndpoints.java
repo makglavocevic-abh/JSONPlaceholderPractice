@@ -24,7 +24,7 @@ public class PlaceholderEndpoints {
  }
 
     @Step("POST Request")
-    public Response postRequest(final String Endpoint, final String body){
+    public Response postRequest(final String endpoint, final String body){
 
         File jsonBody = new File(body);
 
@@ -32,60 +32,60 @@ public class PlaceholderEndpoints {
                 .spec(request())
                 .body(jsonBody)
                 .when()
-                .post(Endpoint);
+                .post(endpoint);
 
     }
     @Step("POST Specific request")
-    public Response postSpecificRequest(final String Endpoint, final String body, int Id){
+    public Response postSpecificRequest(final String endpoint, final String body, int id){
 
         File jsonBody = new File(body);
 
         return given()
                 .spec(request())
-                .pathParam("Id", Id)
+                .pathParam("id", id)
                 .body(jsonBody)
                 .when()
-                .post(Endpoint);
+                .post(endpoint);
 
     }
     @Step("PUT Specific request")
-    public Response putSpecificRequest(final String Endpoint, final String body, int Id){
+    public Response putSpecificRequest(final String endpoint, final String body, int id){
 
         return given()
                 .spec(request())
-                .pathParam("Id", Id)
+                .pathParam("id", id)
                 .body(body)
                 .when()
-                .put(Endpoint);
+                .put(endpoint);
 
     }
     @Step("GET Request")
-    public Response getRequest(final String Endpoint){
+    public Response getRequest(final String endpoint){
 
         return given()
                 .spec(request())
                 .when()
-                .get(Endpoint);
+                .get(endpoint);
 
     }
 
     @Step("GET Specific request")
-    public Response getSpecificRequest(final String Endpoint, int Id){
+    public Response getSpecificRequest(final String endpoint, int id){
 
         return given()
                 .spec(request())
-                .pathParam("Id", Id)
+                .pathParam("id", id)
                 .when()
-                .get(Endpoint);
+                .get(endpoint);
 
     }
     @Step("DELETE Request")
-    public Response deleteRequest(final String Endpoint, int Id){
+    public Response deleteRequest(final String endpoint, int id){
 
         return given()
                 .spec(request())
-                .pathParam("Id", Id)
-                .delete(Endpoint);
+                .pathParam("id", id)
+                .delete(endpoint);
 
     }
 

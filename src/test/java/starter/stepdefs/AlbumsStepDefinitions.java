@@ -52,7 +52,7 @@ public class AlbumsStepDefinitions {
 
     @When("user updates an album")
     public void userUpdateAlbum() {
-        response = placeholderEndpoints.putSpecificRequest(specificAlbum, JsonBodyRandomData.TITLE_PUT_BODY(), 1);
+        response = placeholderEndpoints.putSpecificRequest(specificAlbum, JsonBodyRandomData.titlePutBody(), 1);
     }
 
     @Then("the album update is successful")

@@ -9,22 +9,22 @@ import static org.hamcrest.Matchers.*;
 public class VerifyEndpoint {
 
     @Step("Assert expected HTTP status code")
-    public void validateHttpStatusCode(int StatusCode, Response response) {
-        response.then().statusCode(StatusCode);
+    public void validateHttpStatusCode(int statusCode, Response response) {
+        response.then().statusCode(statusCode);
     }
 
     @Step("Assert body size")
-    public void validateResponseSize(int ExpectedSize, Response response){
+    public void validateResponseSize(int expectedSize, Response response){
         response.then().assertThat().contentType(ContentType.JSON)
-                .and().body("size()", equalTo(ExpectedSize));
+                .and().body("size()", equalTo(expectedSize));
 
     }
 
     @Step("Assert body size and userid")
-    public void validateResponseSizeAndUserId(int ExpectedSize, int UserId, Response response){
+    public void validateResponseSizeAndUserId(int expectedSize, int userId, Response response){
         response.then().assertThat().contentType(ContentType.JSON)
-                .and().body("size()", equalTo(ExpectedSize))
-                .and().body("userId", hasItem(is(UserId)));
+                .and().body("size()", equalTo(expectedSize))
+                .and().body("userId", hasItem(is(userId)));
 
     }
 }

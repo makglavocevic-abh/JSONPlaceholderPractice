@@ -16,7 +16,7 @@ public class JsonBodyRandomData {
             .size(ints().range(1, 100))
             .get();
 
-    public static String TITLE_PUT_BODY() {
+    public static String titlePutBody() {
 
         MockNeat mockNeat = MockNeat.threadLocal();
         Gson gson = new GsonBuilder()
