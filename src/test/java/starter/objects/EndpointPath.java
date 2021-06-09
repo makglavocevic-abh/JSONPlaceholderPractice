@@ -2,21 +2,21 @@ package starter.objects;
 
 public interface EndpointPath {
 
-    String specificUser = "/users/{Id}";
+    String specificUser = "/users/{id}";
 
-    String specificPost = "/posts/{Id}";
+    String specificPost = "/posts/{id}";
 
-    String specificComment = "/comments/{Id}";
+    String specificComment = "/comments/{id}";
 
-    String specificAlbum = "/albums/{Id}";
+    String specificAlbum = "/albums/{id}";
 
-    String specificPhoto = "/photos/{Id}";
+    String specificPhoto = "/photos/{id}";
 
-    String specificTodos = "/todos/{Id}";
+    String specificTodos = "/todos/{id}";
 
-    String commentPOST = "/posts/{Id}/comments";
+    String commentPOST = "/posts/{id}/comments";
 
-    String photosPOST = "/albums/{Id}/photos";
+    String photosPOST = "/albums/{id}/photos";
 
     String userBody = "src/test/java/resources/validusersbody.json";
 
@@ -40,10 +40,10 @@ public interface EndpointPath {
 
     String postsEndpoint = "/posts";
 
-    String userAlbums = "/users/{Id}/albums";
+    String userAlbums = "/users/{id}/albums";
 
-    String userPosts = "/users/{Id}/posts";
+    String userPosts = "/users/{id}/posts";
 
-    String userTodos = "/users/{Id}/todos";
+    String userTodos = "/users/{id}/todos";
 
 }
